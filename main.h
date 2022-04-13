@@ -29,6 +29,8 @@
 	int cuenta_letras(char *str, char *delim);
 	int cuenta_los_tokens(char *str, char *delim);
 
+	char *promp(void);
+
 	void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 	void free_env(void);
