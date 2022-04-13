@@ -10,7 +10,6 @@
 
 char **tokenizer(char *input, char *delim)
 {
-	int count = 0;
 	char **av = NULL;
 
 	av = strtok_emulator(input, delim);
