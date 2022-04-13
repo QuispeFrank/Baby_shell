@@ -30,7 +30,7 @@ void _execve(char **argVec)
 
 
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	ssize_t bytes_read = 0;
 	size_t n = 0;
