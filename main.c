@@ -44,23 +44,7 @@ int main(int argc, char *argv[])
 	{
 		/* muestra el prompt */
 		write(STDOUT_FILENO, prompt, 2);
-
-		cmd = NULL;
-		/* lectura a traves del getline */
-		bytes_read = getline(&cmd, &n, stdin);
-
-		/* validaciones */
-		if (bytes_read == -1)
-		{
-			if(cmd)
-			{
-				free(cmd);
-				free_env();
-			}
-			exit(0);
-		}
-		
-		cmd[_strlen(cmd) - 1] = '\0';
+		cmd = promp();
 
 		if (_strcmp(cmd, "exit") == 0)
 		{
