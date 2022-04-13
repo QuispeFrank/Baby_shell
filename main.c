@@ -32,8 +32,6 @@ void _execve(char **argVec)
 
 int main(void)
 {
-	ssize_t bytes_read = 0;
-	size_t n = 0;
 	char *prompt = "$ ", *cmd = NULL, **av = NULL;
 
 	environ = _copyenv();
