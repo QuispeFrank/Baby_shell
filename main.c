@@ -62,6 +62,8 @@ int main(void)
 		
 		cmd[_strlen(cmd) - 1] = '\0';
 
+		cmd = spaces(cmd);
+
 		if (_strcmp(cmd, "exit") == 0)
 		{
 

@@ -19,6 +19,7 @@
 	char *_strcat(char *dest, const char *src);
 	char *_strncat(char *dest, const char *src, size_t n);
 
+	char *spaces(char *input);
 	char *_strchr(char *s, char c);
 	int _strspn(char *s, char *accept);
 	int _strcmp(char *s1, char *s2);
