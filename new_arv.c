@@ -2,14 +2,14 @@
 
 char **arv_to_execute(char **arv1, char *total)
 {
-	int k, count, i;
-	char **new_arv;
+	int k = 1, count, i;
+	char **new_arv = NULL;
 	
 	while (arv1[count])
 	{
 		count++;
 	}
-	new_arv = malloc(sizeof(char) * count);
+	new_arv = malloc(sizeof(char *) * (count + 1));
 	for (i = 0; i <= count; i++)
 	{
 		new_arv[i] = malloc(sizeof(char) * 20);
