@@ -19,7 +19,8 @@ void valid_exec(char **av)
              return;
          }
         else
-           _execve(argv);
-		   free(argv);
-	
+		{	
+			_execve(argv);
+			free(argv);
+		}
 }

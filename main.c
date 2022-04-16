@@ -30,14 +30,14 @@ int main(void)
 		av = tokenizer(cmd, " ");
 		/*Si no es un Script, ni un builting, verificamos el tipo de env*/
 		/*Se verifica si es de tipo /bin/ls o ls */
+		free(cmd);
 
 		valid_exec(av);
 				/*Antes de enviarse a ejecutar, se deberi validarse si existe o no el path*/
-		free(cmd);
 		//if (av != NULL)
 //			_execve(av);// Lo he colocado en validation_execution.c 
 		//else
-			//	_free(av);
+		_free(av);
 	}
 	return (0);
 }

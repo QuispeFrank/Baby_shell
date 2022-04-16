@@ -8,7 +8,8 @@
 
 char **arv_for_execute(char **arv)
 {
-	char *total = NULL, *PATH1 = NULL, **new_arv = NULL, **Path_tokens = NULL;
+	char *total = NULL, *PATH1 = NULL;
+	char **new_arv = NULL, **Path_tokens = NULL;
 	int i = 0, val;
 
 	PATH1 = getenv("PATH");
@@ -28,6 +29,7 @@ char **arv_for_execute(char **arv)
 		if (val == 0)
 		{
 			new_arv = arv_to_execute(arv, total); 
+			free(total);
 			return (new_arv);
 		}
 		i++;
@@ -36,5 +38,3 @@ char **arv_for_execute(char **arv)
 	free(total);
 	return (NULL);
 }
-
-
