@@ -61,7 +61,6 @@ char *_strcpy(char *dest, const char *src)
 }
 
 
-#include "main.h"
 /**
  * _strncmp - Compare two strings.
  * @s1: Pointer to a string.
@@ -87,4 +86,36 @@ int _strncmp(const char *s1, const char *s2, size_t n)
                 return (0);
         else
                 return (-15);
+}
+
+
+/**
+ * _strdup - eturns a pointer to a newly allocated
+ * space in memory, which contains a copy of the
+ * string given as a parameter.
+ *
+ * @str: argument counter.
+ *
+ * Return: NULL if str = NULL or insufficient memory was available
+ */
+char *_strdup(const char *str)
+{
+	char *p;
+	unsigned int i = 0;
+
+	if (str == NULL)
+		return (NULL);
+	for (i = 0; str[i]; i++)
+	{}
+
+	p = malloc(sizeof(char) * (i + 1));
+
+	if (p != NULL)
+	{
+		for (i = 0; str[i]; i++)
+			p[i] = str[i];
+		p[i] = '\0';
+	}
+
+	return (p);
 }
