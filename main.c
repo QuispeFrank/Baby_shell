@@ -34,9 +34,7 @@ int main(void)
 {
 	char *prompt = "$ ", *cmd = NULL, **av = NULL;
 
-	environ = _copyenv();
-	if (!environ)
-		exit(-100);
+	copy_env();
 
 	while(1)
 	{
