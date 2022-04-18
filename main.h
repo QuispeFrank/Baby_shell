@@ -65,6 +65,7 @@
 	int _getenv_index(char *name);
 
 	char *getenv_format(char **av);
-	
+
+	char **_dupdou_pointer_from(char **src);
 
 #endif

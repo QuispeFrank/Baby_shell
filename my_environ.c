@@ -1,34 +1,57 @@
 #include "main.h"
 
-void copy_env(void)
-{
-        char **ptr = NULL;
-        int index = 0, var = 0; 
+/**
+ *
+ *
+ */
 
-	/* numero de variables de entorno */
-        for (var = 0; environ[var]; var++)
+
+/**
+ * _dupdou_pointer_from - a function that duplicates a double pointer.
+ * @src: source from copy.
+ *
+ * Description: this funcion takes a double pointer @src and duplicates it, using
+ * malloc(3).
+ *
+ * Return: NULL if it fails, otherwise @dest.
+ */
+char **_dupdou_pointer_from(char **src)
+{
+	char **dest = NULL;
+	int len, index = 0;
+
+	/* tamaño del source */
+        for (len = 0; src[len]; len++)
                 ;
 
-	/* espacio para las variables de entorno */
-        ptr = malloc(sizeof(char *) * (var + 1));
-        if (ptr == NULL)
-                exit (0);
+	/* espacio para los punteros */
+        dest = malloc(sizeof(char *) * (len + 1));
+        if (dest == NULL)
+                return (NULL);
 
-	/* comienza la copia desde environ hacia ptr */
-	while (environ[index])
+	/* comienza la copia desde src hacia dest */
+	while (src[index])
         {
 		/* duplicando una variable de entorno en ptr */ 
-		ptr[index] = _strdup(environ[index]);
-		if (ptr[index] == NULL)
+		dest[index] = _strdup(src[index]);
+		if (dest[index] == NULL)
 		{
-			_free(ptr);
-			exit(0);
+			_free(dest);
+			return(NULL);
 		}
 		index++;
-        }
-        ptr[index] = NULL;
-	/* environ se muda con ptr */ 
-	environ = ptr;
+	}
+	dest[index] = NULL;
+
+	return (dest);
+}
+
+void copy_env(void)
+{
+	/* environ se muda a una copia */ 
+	environ = _dupdou_pointer_from(environ);
+	if (environ == NULL)
+		exit(0);
 
 	/* como todo esta Okey obtenemos $PATH */
 	PATH = _paths(_getenv("PATH"));

@@ -43,7 +43,6 @@ int _setenv(char **av)
 	int index = 0, len = 0, ok = 0, r_index = 0;
 
 	/* se deberia validar el numero de argumentos = 3 */
-	/* ptr debe tener un espacio adicional que environ */
 
 	/* existe el nuevo environ yet? */
 	r_index = _getenv_index(av[1]);
@@ -51,7 +50,7 @@ int _setenv(char **av)
 	{
 		/* existe, guardamos contenido original por si falla algo */
 		env_aux = environ[r_index];
-		/* existe, liberamos oldvalue */		
+		/* reemplazo del antiguo bloque */
 		environ[r_index] = _getenv_format(av);
 		if (environ[r_index] == NULL)
 		{
@@ -59,6 +58,7 @@ int _setenv(char **av)
 			return(-2);
 		}	
 		free(env_aux);
+		reinit_environ(_dupdou_pointer_from(environ));
 		return(0);
 	}
 	
@@ -177,7 +177,7 @@ int main(void)
 	/* char **paths = NULL; */
 	dir_t *head = NULL;
 	char *cmd = "setenv HELLO BABY";
-	char *cmd2 = "setenv SHELL /bin/bruno";
+	char *cmd2 = "setenv PATH /bin/bruno";
 	char **av = NULL;
 	int index = 0;
 
@@ -186,36 +186,20 @@ int main(void)
 
 	/* deberiamos usar setenv despues de validar
 	 * casos raros y luego del strtok se asume eso */
-	av = tokenizer(cmd, " ");
+
+	/* agrega HELLO */
+	av = tokenizer(cmd2, " ");
 	_setenv(av);
 	_free(av);
 
+	/* reemplaza PATH */
+	av = tokenizer(cmd, " ");
+	_setenv(av);
+
+	/* imprime environ */
 	for (index = 0; environ[index]; index++)
 		printf("%s\n", environ[index]);
 
-	av = tokenizer(cmd2, " ");
-	_setenv(av);
-
-	/* env_var = _getenv(ptr); */
-	/*
-	if (!env_var)
-	{
-		printf("ruta no encontrada\n");
-		free_env();
-		return (0);
-	}
-	*/
-
-	/* funcion que me obtiene los paths de $PATH y almacena en malloc */
-	/* paths = _paths(env_var); */
-	/*
-	if (paths == NULL)
-	{
-		printf("algo fallo en _paths = NULL");
-		free_env();
-		return (0);
-	}
-	*/
 	/* se cambia los malloc por los linked list */
 	 head = _linked_path(PATH);
 	/* se elimina el malloc anterior */
@@ -223,10 +207,6 @@ int main(void)
 
 	/* imprimimos los paths desde el linked list */
 	 print_list(head);
-
-	 /* impresion de environment */
-	 for (index = 0; environ[index]; index++)
-		 printf("%s\n", environ[index]);
 
 	/* liberamos el linked_list */
 	 free_list(head);
