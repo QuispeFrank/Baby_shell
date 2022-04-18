@@ -48,7 +48,8 @@ void copy_env(void)
  * list to find the environment variable name, and returns a
  * pointer to the corresponding value string.
  *
- * Return: a pointer to variable environment.
+ * Return: NULL si no encuentra, otherwise a pointer to variable 
+ * environment.
  */
 char *_getenv(const char *name)
 {

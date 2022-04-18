@@ -62,7 +62,9 @@
 	
 	int reinit_environ(char **ptr);
 
+	int _getenv_index(char *name);
 
+	char *getenv_format(char **av);
 	
 
 #endif
