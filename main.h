@@ -59,6 +59,8 @@
 	void _free(char **av);
 
 	char **tokenizer(char *input, char *delim);
+	
+	int reinit_environ(char **ptr);
 
 
 	

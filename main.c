@@ -1,6 +1,15 @@
 #include "main.h"
 
-char *add_new_var(char **av)
+/**
+ * get_env_var - funcion que devuelve un string en formato name=value.
+ * @av: doble puntero que contiene name, value.
+ *
+ * Description: la funcion concatena 3 string: av[1], =, av[2] el cual
+ * almacena en un puntero ptr con malloc.
+ *
+ * Return: NULL si falla, @ptr in success.
+ */
+char *get_envvar_from(char **av)
 {
 	char *ptr = NULL;
 	int len = 0, index = 0;
@@ -22,10 +31,14 @@ char *add_new_var(char **av)
 	return (ptr);
 }
 
+/**
+ * 
+ *
+ */
 int _setenv(char **av)
 {
-	char **ptr = NULL, **aux_env = NULL, **aux_path = NULL;
-	int index = 0, var = 0;
+	char **ptr = NULL; 
+	int index = 0, var = 0, ok = 0;
 
 	/* se deberia validar el numero de argumentos = 3 */
 	/* ptr debe tener un espacio adicional que environ */
@@ -51,7 +64,7 @@ int _setenv(char **av)
                 }
                 index++;
         }
-        ptr[index] = add_new_var(av);
+        ptr[index] = get_envvar_from(av);
 	if (ptr[index] == NULL)
 	{
 		_free(ptr);
@@ -60,7 +73,25 @@ int _setenv(char **av)
 	/* ptr[index] = NULL; */
 	/* validar ptr[index] */
 	ptr[index + 1] = NULL;
-	
+	ok = reinit_environ(ptr);
+
+	return (ok);
+}
+
+/**
+ * reinit_environ - funcion que reinicializa el environment.
+ * @ptr: doble puntero que contiene el nuevo environment.
+ *
+ * Description: funcion que elige un doble puntero @ptr como base,
+ * se lo entrega a la variable environ, reinicia $PATH, y libera los 
+ * anteriores valores de environ y PATH.
+ *
+ * Return: -1 si falla, 0 en success.
+ */
+int reinit_environ(char **ptr)
+{
+	char **aux_env = NULL, **aux_path = NULL;
+
 	/* guardamos environ y path en caso de fallo */
 	aux_env = environ;
 	aux_path = PATH;
@@ -92,7 +123,6 @@ int main(void)
 	dir_t *head = NULL;
 	char *cmd = "setenv HOLA BABY";
 	char **av = NULL;
-	int flag = 0;
 	int index = 0;
 
 	/* agregando mi nuevo environ */
