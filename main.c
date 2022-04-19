@@ -39,50 +39,28 @@ char *_getenv_format(char **av)
  */
 int _setenv(char **av)
 {
-	char **ptr = NULL, *env_aux = NULL; 
-	int index = 0, len = 0, ok = 0, r_index = 0;
-
+	char **ptr = NULL; 
+	int index = 0, len = 0, ok = 0;
 	/* se deberia validar el numero de argumentos = 3 */
-
 	/* existe el nuevo environ yet? */
-	r_index = _getenv_index(av[1]);
-	if(r_index != -1)
-	{
-		/* existe, guardamos contenido original por si falla algo */
-		env_aux = environ[r_index];
-		/* reemplazo del antiguo bloque */
-		environ[r_index] = _getenv_format(av);
-		if (environ[r_index] == NULL)
-		{
-			environ[r_index] = env_aux;
-			return(-2);
-		}	
-		free(env_aux);
-		reinit_environ(_dupdou_pointer_from(environ));
-		return(0);
-	}
-	
+	ok = already_exist_then_replace(av);
+	if (ok == 0 || ok == -2)
+		return (ok);
+
 	/* contamos environ */
 	for (len = 0; environ[len]; len++)
-		;
+		index++;
 	
 	/* se asigna el espacio en ptr */
 	ptr = malloc(sizeof(char *) * (len + 2));
 	if (ptr == NULL)
 		return(-1);
 
-	/* comienza la copia desde environ hacia ptr */
-        while (environ[index])
-        {
-                /* duplicando una variable de entorno en ptr */
-                ptr[index] = _strdup(environ[index]);
-                if (ptr[index] == NULL)
-                {
-                        _free(ptr);
-                        return(-1);
-                }
-                index++;
-        }
+	/* se copia desde environ hacia ptr con malloc */
+	ptr = douptr_cpy(ptr, environ);
+	if (ptr == NULL)
+		return (-1);
+	
 	/* se agrega la nueva variable de entorno */
         ptr[index] = _getenv_format(av);
 	if (ptr[index] == NULL)
