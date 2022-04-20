@@ -9,6 +9,14 @@
 	#include <sys/types.h>
 	#include <sys/wait.h>
 
+	/**
+	 * struct list_s - linked paths
+	 * @path_dir: Pointer to one path directory. 
+	 * @next: a pointer to the next node.
+	 *
+	 * Description: a linked list that contains all the
+	 * directories contained in $PATH.
+	 */
 	typedef struct list_s
 	{
 		char *path_dir;
@@ -20,11 +28,23 @@
 	char **PATH;
 
 	/* my_environ.c */
-	void copy_env();
-	void free_env(void);
-	dir_t *_linked_path(char **paths);
-	char **_paths(char *nombre);
+	int already_exist_then_replace(char **av);
+	char **douptr_cpy(char **dest, char **src);
+	char **_dupdou_pointer_from(char **src);
 	char *_getenv(const char *name);
+	void free_env(void);
+
+	/* my_environ2.c */
+	char *_getenv_format(char **av);
+	int _setenv(char **av);
+	int reinit_environ(char **ptr);
+	int _getenv_index(char *name);
+	int _unsetenv(char **av);
+
+	/* my_environ3.c */
+	void copy_env();
+	char **_paths(char *nombre);
+	dir_t *_linked_path(char **paths);
 
 	/* string_functions_1.c */
 	char *_strcat(char *dest, const char *src);
@@ -43,30 +63,22 @@
 	char **strtok_emulator(char *str, char *delim);
 	int cuenta_letras(char *str, char *delim);
 	int cuenta_los_tokens(char *str, char *delim);
-	void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 	/* single_linked_list.c */
 	size_t print_list(const dir_t *h);
 	dir_t *add_node_end(dir_t **head, const char *str);
 	void free_list(dir_t *head);
 
+	/* promp.c */
 	char *promp(void);
 
+	/* spaces.c */
 	char *spaces(char *input);
-
 
 	/* fress.c */
 	void _free(char **av);
 
+	/* tokens.c */
 	char **tokenizer(char *input, char *delim);
-	
-	int reinit_environ(char **ptr);
 
-	int _getenv_index(char *name);
-
-	char *_getenv_format(char **av);
-
-	char **_dupdou_pointer_from(char **src);
-	char **douptr_cpy(char **dest, char **src);
-	int already_exist_then_replace(char **av);
 #endif
